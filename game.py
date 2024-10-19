@@ -15,7 +15,7 @@ class player:
         self.hp = 0
         self.mp = 0
         self.status_effects = []
-        self.location = 'start'
+        self.location = 'b2'
         self.gameOver = False
         self.job = ""
 
@@ -26,7 +26,7 @@ myPlayer = player()
 def title_screen_selections():
     option = input("> ")
     if option.lower() == ("play"):
-        start_game()
+        setupGame()
     elif option.lower() == ("help"):
         help_menu()
     elif option.lower() == ("quit"):
@@ -36,7 +36,7 @@ def title_screen_selections():
         print("Please enter a valid command.")
         option = input("> ")
         if option.lower() == ("play"):
-            start_game()
+            setupGame()
         elif option.lower() == ("help"):
             help_menu()
         elif option.lower() == ("quit"):
@@ -79,6 +79,7 @@ UP = 'up', 'north'
 DOWN = 'down', 'south'
 LEFT = 'left', 'west'
 RIGHT = 'right','east'
+ZONENAME =""
 
 solvedPlaces = {'a1': False, 'a2': False, 'a3': False, 'a4': False,
                  'b1': False, 'b2': False, 'b3': False, 'b4': False,
@@ -89,68 +90,68 @@ solvedPlaces = {'a1': False, 'a2': False, 'a3': False, 'a4': False,
 zoneMap = {
     'a1': {
         ZONENAME: "",
-        DESCRIPTION = 'description',
-        EXAMINATION = 'examine',
-        SOLVED = False,
-        UP = 'up', 'north',
-        DOWN = 'down', 'south',
-        LEFT = 'left', 'west',
-        RIGHT = 'right','east'
+        DESCRIPTION: 'description',
+        EXAMINATION: 'examine',
+        SOLVED: False,
+        UP: 'empty',
+        DOWN: 'b1',
+        LEFT: 'empty',
+        RIGHT: 'b2'
         },
 
     'a2': {
         ZONENAME: "",
-        DESCRIPTION = 'description',
-        EXAMINATION = 'examine',
-        SOLVED = False,
-        UP = 'up', 'north',
-        DOWN = 'down', 'south',
-        LEFT = 'left', 'west',
-        RIGHT = 'right','east'
+        DESCRIPTION: 'description',
+        EXAMINATION: 'examine',
+        SOLVED: False,
+        UP: 'empty', 
+        DOWN: 'b2',
+        LEFT: 'a1',
+        RIGHT: 'a4'
     },
 
     'a3': {
         ZONENAME: "",
-        DESCRIPTION = 'description',
-        EXAMINATION = 'examine',
-        SOLVED = False,
-        UP = 'up', 'north',
-        DOWN = 'down', 'south',
-        LEFT = 'left', 'west',
-        RIGHT = 'right','east'
+        DESCRIPTION: 'description',
+        EXAMINATION: 'examine',
+        SOLVED: False,
+        UP: '',
+        DOWN: 'b3',
+        LEFT: 'a2',
+        RIGHT: 'a4'
     },
 
     'b1': {
         ZONENAME: "",
-        DESCRIPTION = 'description',
-        EXAMINATION = 'examine',
-        SOLVED = False,
-        UP = 'up', 'north',
-        DOWN = 'down', 'south',
-        LEFT = 'left', 'west',
-        RIGHT = 'right','east'
+        DESCRIPTION: 'description',
+        EXAMINATION: 'examine',
+        SOLVED: False,
+        UP: 'a1',
+        DOWN: 'c1',
+        LEFT: '',
+        RIGHT: 'b2'
     },
 
     'b2': {
         ZONENAME: "",
-        DESCRIPTION = 'This is your home!',
-        EXAMINATION = 'Yes it really is a nice place!',
-        SOLVED = False,
-        UP = 'a2',
-        DOWN = 'c2',
-        LEFT = 'b1',
-        RIGHT = 'b3',
+        DESCRIPTION: 'This is your home!',
+        EXAMINATION: 'Yes it really is a nice place!',
+        SOLVED: False,
+        UP: 'a2',
+        DOWN: 'c2',
+        LEFT: 'b1',
+        RIGHT: 'b3',
     },
 
     'b3': {
         ZONENAME: "",
-        DESCRIPTION = 'description',
-        EXAMINATION = 'examine',
-        SOLVED = False,
-        UP = 'up', 'north',
-        DOWN = 'down', 'south',
-        LEFT = 'left', 'west',
-        RIGHT = 'right','east'
+        DESCRIPTION:'description',
+        EXAMINATION: 'examine',
+        SOLVED: False,
+        UP: 'a3',
+        DOWN: 'c3',
+        LEFT: 'b2',
+        RIGHT: 'b4'
     },
 }
 
@@ -185,18 +186,18 @@ def playerMove(myaction):
     ask = "Where would you like to go?\n"
     dest = input(ask)
     if dest in ['up', 'north']:
-        destiantion = zonemap[myPlayer.location][UP]
-        movementHandler(destination)
+        destiantion = zoneMap[myPlayer.location][UP]
+        movementHandler(dest)
 
     elif dest in ['left', 'west']:
-        destiantion = zonemap[myPlayer.location][LEFT]
-        movementHandler(destination)
+        destiantion = zoneMap[myPlayer.location][LEFT]
+        movementHandler(dest)
     elif dest in ['right', 'east']:
-        destiantion = zonemap[myPlayer.location][RIGHT]
-        movementHandler(destination)
+        destiantion = zoneMap[myPlayer.location][RIGHT]
+        movementHandler(dest)
     elif dest in ['down', 'south']:
-        destiantion = zonemap[myPlayer.location][DOWN]
-        movementHandler(destination)
+        destiantion = zoneMap[myPlayer.location][DOWN]
+        movementHandler(dest)
 
 
 def movementHandler(destination):
@@ -212,8 +213,7 @@ def playerExamine(action):
 
 
 ###GameFunctionality
-def start_game():
-    return
+
 
 
 
@@ -274,13 +274,12 @@ def setupGame():
         sys.stdout.write(character)
         sys.stdout.flush()
         time.sleep(0.05)
-    playerName = input("> ")
-    myPlayer.name = playerName
 
-    speech1 = "Welcome to this world of discovery"
-    speech2 = "Good luck on your journey"
-    speech3 = "Youll need it"
-    speech4 = "Hehehehehe...!"
+
+    speech1 = "Welcome to this world of discovery\n"
+    speech2 = "Good luck on your journey\n"
+    speech3 = "Youll need it\n"
+    speech4 = "Hehehehehe...!\n"
     for character in speech1:
         sys.stdout.write(character)
         sys.stdout.flush()
